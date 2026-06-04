@@ -348,21 +348,62 @@
     });
   };
 
-  /* ---------- FORM ---------- */
+  /* ---------- FORM (Web3Forms + mailto fallback) ---------- */
   const setupForm = () => {
     const form = $('[data-form]');
     const note = $('[data-form-note]');
     if (!form) return;
-    form.addEventListener('submit', (e) => {
+
+    const showMsg = (msg, isError = false) => {
+      if (!note) return;
+      note.textContent = msg;
+      note.classList.add('is-visible');
+      note.style.color = isError ? '#C84713' : '';
+      setTimeout(() => note.classList.remove('is-visible'), 6000);
+    };
+
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const isEn = document.documentElement.getAttribute('data-lang') === 'en';
-      const msg = isEn ? '✦ Thank you. Marine will reply within 48h.' : '✦ Merci. Marine vous répond sous 48h.';
-      if (note) {
-        note.textContent = msg;
-        note.classList.add('is-visible');
-        setTimeout(() => note.classList.remove('is-visible'), 5000);
+      const accessKey = form.querySelector('[name="access_key"]')?.value || '';
+
+      // If no Web3Forms key configured → fallback to mailto:
+      if (!accessKey || accessKey === 'REPLACE_WITH_YOUR_WEB3FORMS_KEY') {
+        const name  = form.name?.value || '';
+        const email = form.email?.value || '';
+        const msg   = form.msg?.value || '';
+        const subject = encodeURIComponent('Portfolio — Nouveau message');
+        const body = encodeURIComponent(
+          `Nom: ${name}\nEmail: ${email}\n\n${msg}\n\n— envoyé depuis marine-dubois portfolio`
+        );
+        window.location.href = `mailto:marineduboispro@yahoo.com?subject=${subject}&body=${body}`;
+        showMsg(isEn
+          ? '✦ Opening your email client…'
+          : '✦ Ouverture de votre client email…');
+        return;
       }
-      form.reset();
+
+      try {
+        const data = new FormData(form);
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+        const json = await res.json();
+        if (json.success) {
+          showMsg(isEn
+            ? '✦ Thank you. Marine will reply within 48h.'
+            : '✦ Merci. Marine vous répond sous 48h.');
+          form.reset();
+        } else {
+          throw new Error(json.message || 'Form error');
+        }
+      } catch (err) {
+        showMsg(isEn
+          ? '⚠ Submission failed. Please email marineduboispro@yahoo.com directly.'
+          : '⚠ Envoi échoué. Écrivez directement à marineduboispro@yahoo.com.', true);
+      }
     });
   };
 

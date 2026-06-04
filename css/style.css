@@ -747,13 +747,18 @@ body.intro-played .display__word { animation: none; }
 .daisy--scatter {
   position: absolute;
   pointer-events: auto;
-  z-index: 4;
+  z-index: 1; /* BEHIND content — never crushes text or images */
   filter: drop-shadow(0 8px 22px rgba(0,0,0,.14));
-  transition: transform .6s var(--ease-spring), filter .4s var(--ease-smooth);
+  transition: transform .6s var(--ease-spring), filter .4s var(--ease-smooth), opacity .35s var(--ease-smooth);
   will-change: transform;
   cursor: grab;
   user-select: none;
   -webkit-user-drag: none;
+  opacity: .78; /* subtle: present without dominating */
+}
+.daisy--scatter:hover {
+  opacity: 1;
+  z-index: 5; /* lift to top on hover only */
 }
 .daisy--scatter:hover {
   transform: rotate(180deg) scale(1.25) !important;
@@ -1081,20 +1086,24 @@ body.intro-played .display__word { animation: none; }
   animation: float 7s ease-in-out infinite;
 }
 .manifesto__daisy--a {
-  width: clamp(80px, 12vw, 200px);
-  top: 8%; right: 6%;
+  width: clamp(70px, 9vw, 160px);
+  top: 4%; right: 4%;
   --r: 18deg;
+  z-index: 0; /* always behind text */
+  opacity: .9;
 }
 .manifesto__daisy--b {
-  width: clamp(70px, 10vw, 160px);
-  bottom: 10%; left: 4%;
+  width: clamp(60px, 8vw, 130px);
+  bottom: 6%; right: 14%; /* moved AWAY from start-of-line text 'Je' & 'Qui' */
   --r: -22deg;
   animation-delay: 2s;
+  z-index: 0;
+  opacity: .9;
 }
 
 .manifesto__inner {
   position: relative;
-  z-index: 2;
+  z-index: 3; /* above daisies */
   max-width: 1400px;
   margin: 0 auto;
   width: 100%;
@@ -1171,16 +1180,17 @@ body.intro-played .display__word { animation: none; }
   font-size: 10px;
   letter-spacing: .25em;
   text-transform: uppercase;
-  font-weight: 600;
-  color: var(--ink-2);
+  font-weight: 700;
+  color: var(--ink); /* darker = max contrast on solar bg */
 }
 .manifesto__sig-value {
   font-family: var(--serif);
   font-style: italic;
-  font-weight: 500;
-  font-size: clamp(18px, 1.8vw, 24px);
-  color: var(--sunset);
+  font-weight: 600;
+  font-size: clamp(20px, 2vw, 28px);
+  color: var(--ink); /* INK is readable on any solar tone — was sunset which blended with pink */
   font-variation-settings: 'opsz' 144, 'SOFT' 100, 'WONK' 1;
+  text-shadow: 0 2px 12px rgba(255,255,255,.5); /* subtle white halo for extra pop */
 }
 
 @media (max-width: 720px) {
@@ -1443,6 +1453,7 @@ body.intro-played .display__word { animation: none; }
   position: absolute; inset: 0;
   width: 100%; height: 100%;
   object-fit: cover;
+  object-position: center 20%; /* keep model heads visible — no chop at the top */
   transition: transform 1.6s var(--ease-fluid), filter .8s var(--ease-smooth);
   filter: saturate(1.08) contrast(1.02);
   transform: scale(1.001);
@@ -1941,6 +1952,21 @@ body.intro-played .display__word { animation: none; }
   text-align: center;
   position: relative;
   z-index: 2;
+}
+
+/* Wide variant — spans full row for long recommendation letter */
+.testimonial--wide {
+  grid-column: 1 / -1;
+  background: var(--cream);
+  border: 1px solid var(--line);
+}
+.testimonial--wide .testimonial__quote {
+  columns: 2;
+  column-gap: 48px;
+  font-size: clamp(14px, 1.05vw, 16px);
+}
+@media (max-width: 900px) {
+  .testimonial--wide .testimonial__quote { columns: 1; }
 }
 
 @media (max-width: 1100px) {
@@ -2475,8 +2501,9 @@ body.intro-played .display__word { animation: none; }
 .lightbox__img {
   width: 100%; height: 100%;
   max-height: 75vh;
-  object-fit: contain;
-  background: var(--ink);
+  object-fit: contain; /* contain shows the whole image — no head cuts */
+  object-position: center top; /* prefer showing the top (heads/title) */
+  background: var(--cream); /* warm bg around contained image instead of ink */
   flex: 1;
 }
 .lightbox__thumbs {

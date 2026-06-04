@@ -10,3 +10,8 @@ node_modules/
 audit_tmp/
 raw_tmp/
 .claude/
+
+# Local-only PDF extraction (259 MB) — Marine browses to pick images
+assets/portfolio-all/
+_video_frames/
+*.py
