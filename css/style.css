@@ -200,7 +200,7 @@ body.intro-played .display__word { animation: none; }
   position: absolute; inset: 0;
   background:
     radial-gradient(ellipse at 75% 25%, var(--sun) 0%, transparent 60%),
-    radial-gradient(ellipse at 20% 70%, var(--pop-2) 0%, transparent 50%),
+    radial-gradient(ellipse at 20% 70%, rgba(255,122,179,.45) 0%, transparent 45%),
     radial-gradient(ellipse at 50% 100%, var(--orange) 0%, transparent 65%),
     var(--cream);
   animation: bgPulse 8s ease-in-out infinite alternate;
@@ -632,9 +632,9 @@ body.intro-played .display__word { animation: none; }
   position: absolute; inset: 0;
   pointer-events: none;
   background-image:
-    radial-gradient(circle at 20% 30%, rgba(255,204,46,.45), transparent 45%),
-    radial-gradient(circle at 80% 70%, rgba(255,45,127,.32), transparent 50%),
-    radial-gradient(circle at 50% 100%, rgba(255,94,31,.30), transparent 55%);
+    radial-gradient(circle at 20% 30%, rgba(255,204,46,.40), transparent 45%),
+    radial-gradient(circle at 80% 70%, rgba(255,122,179,.18), transparent 50%),
+    radial-gradient(circle at 50% 100%, rgba(255,94,31,.22), transparent 55%);
   z-index: 0;
 }
 .hero__bg { position: absolute; inset: 0; z-index: 0; }
@@ -645,8 +645,8 @@ body.intro-played .display__word { animation: none; }
   mix-blend-mode: multiply;
 }
 .hero__color--1 { width: 60vw; height: 60vw; top: -15%; right: -15%; background: var(--sun); opacity: .9; }
-.hero__color--2 { width: 50vw; height: 50vw; bottom: -15%; left: -10%; background: var(--pop-2); opacity: .38; }
-.hero__color--3 { width: 38vw; height: 38vw; top: 30%;    left: 30%;  background: var(--sunset); opacity: .45; }
+.hero__color--2 { width: 50vw; height: 50vw; bottom: -15%; left: -10%; background: var(--pop-2); opacity: .24; }
+.hero__color--3 { width: 38vw; height: 38vw; top: 30%;    left: 30%;  background: var(--sunset); opacity: .38; }
 
 /* Decorative SUN — a small solid disc in the hero */
 .hero::before {
@@ -1132,7 +1132,13 @@ body.intro-played .display__word { animation: none; }
   font-variation-settings: 'opsz' 144, 'SOFT' 100, 'WONK' 1;
   color: var(--ink);
 }
-.manifesto__line { display: block; overflow: hidden; }
+.manifesto__line {
+  display: block;
+  overflow: hidden;
+  /* room for italic ascenders/descenders so "Je" & "qui" aren't clipped */
+  padding: .12em .12em .1em;
+  margin: -.12em -.12em -.1em;
+}
 .manifesto__line > span {
   display: inline-block;
   margin-right: .2em;
