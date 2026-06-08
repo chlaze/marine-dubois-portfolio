@@ -1473,6 +1473,13 @@ body.intro-played .display__word { animation: none; }
   transform: scale(1.08);
   filter: saturate(1.25) contrast(1.06);
 }
+/* Geological: zoom sur la figurine (gauche), on rogne le texte à droite */
+.card__img--figurine {
+  object-position: 8% center;
+  transform: scale(1.45);
+  transform-origin: 18% 45%;
+}
+.card:hover .card__img--figurine { transform: scale(1.55); }
 .card {
   transition: transform .8s var(--ease-smooth), opacity .5s var(--ease-smooth);
 }
