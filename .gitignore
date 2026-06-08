@@ -15,3 +15,10 @@ raw_tmp/
 assets/portfolio-all/
 _video_frames/
 *.py
+
+# Fichiers de travail locaux (non utilisés par le site)
+_zip_tmp/
+corrections-site-marine-dubois.md
+Marine DUBOIS - Portfolio*.jpeg
+Marine DUBOIS - Portfolio*.pdf
+WhatsApp Image*.jpeg

@@ -199,15 +199,15 @@ body.intro-played .display__word { animation: none; }
 .loader__bg {
   position: absolute; inset: 0;
   background:
-    radial-gradient(ellipse at 75% 25%, var(--sun) 0%, transparent 55%),
-    radial-gradient(ellipse at 20% 70%, var(--pop) 0%, transparent 55%),
-    radial-gradient(ellipse at 50% 100%, var(--sunset) 0%, transparent 65%),
+    radial-gradient(ellipse at 75% 25%, var(--sun) 0%, transparent 60%),
+    radial-gradient(ellipse at 20% 70%, var(--pop-2) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 100%, var(--orange) 0%, transparent 65%),
     var(--cream);
   animation: bgPulse 8s ease-in-out infinite alternate;
 }
 @keyframes bgPulse {
-  from { filter: hue-rotate(0deg) saturate(1); }
-  to   { filter: hue-rotate(15deg) saturate(1.15); }
+  from { filter: hue-rotate(0deg) saturate(.95); }
+  to   { filter: hue-rotate(8deg) saturate(1.02); }
 }
 .loader__daisy {
   position: absolute;
@@ -258,9 +258,9 @@ body.intro-played .display__word { animation: none; }
   text-shadow: 0 4px 30px rgba(255,255,255,.5);
 }
 .loader__word:nth-child(2) {
-  font-style: italic;
+  font-style: normal; /* plus d'italique — même style que « Marine » */
   padding-right: 0.5em;
-  color: var(--ink); /* Same INK — italic differentiates visually */
+  color: var(--sunset); /* couleur fun (orange) au lieu de l'italique */
   text-shadow:
     0 4px 30px rgba(255,255,255,.5),
     0 2px 6px rgba(255,94,31,.18); /* subtle warm halo */
@@ -308,7 +308,7 @@ body.intro-played .display__word { animation: none; }
 }
 
 .nav__brand {
-  display: flex; align-items: baseline; gap: 6px;
+  display: flex; align-items: baseline; gap: 2px;
 }
 .nav__brand-mark {
   font-family: var(--serif);
@@ -644,9 +644,9 @@ body.intro-played .display__word { animation: none; }
   filter: blur(80px);
   mix-blend-mode: multiply;
 }
-.hero__color--1 { width: 60vw; height: 60vw; top: -15%; right: -15%; background: var(--sun); opacity: .95; }
-.hero__color--2 { width: 50vw; height: 50vw; bottom: -15%; left: -10%; background: var(--pop); opacity: .65; }
-.hero__color--3 { width: 38vw; height: 38vw; top: 30%;    left: 30%;  background: var(--sunset); opacity: .55; }
+.hero__color--1 { width: 60vw; height: 60vw; top: -15%; right: -15%; background: var(--sun); opacity: .9; }
+.hero__color--2 { width: 50vw; height: 50vw; bottom: -15%; left: -10%; background: var(--pop-2); opacity: .38; }
+.hero__color--3 { width: 38vw; height: 38vw; top: 30%;    left: 30%;  background: var(--sunset); opacity: .45; }
 
 /* Decorative SUN — a small solid disc in the hero */
 .hero::before {
@@ -1798,26 +1798,24 @@ body.intro-played .display__word { animation: none; }
 /* Qualités (soft skills) */
 .exp__qualities { margin-top: 32px; }
 .qualities { display: flex; flex-wrap: wrap; gap: 8px; }
+/* Même traitement que les pastilles « Compétences » : contour transparent */
 .quality {
-  font-family: var(--serif);
-  font-style: italic;
-  font-weight: 500;
-  font-size: 14px;
-  padding: 8px 16px;
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  padding: 8px 14px;
+  border: 1px solid var(--line);
   border-radius: 999px;
-  background: linear-gradient(105deg, var(--sun) 0%, var(--orange) 100%);
+  display: inline-block;
+  background: transparent;
   color: var(--ink);
-  font-variation-settings: 'opsz' 144, 'SOFT' 100, 'WONK' 1;
-  transition: transform .35s var(--ease-smooth);
+  transition: background .25s, color .25s, border-color .25s, transform .35s var(--ease-smooth);
 }
-.quality:hover { transform: translateY(-2px); }
-.quality:nth-child(2n) {
-  background: linear-gradient(105deg, var(--pop-2) 0%, var(--pop) 100%);
-  color: var(--off);
-}
-.quality:nth-child(3n) {
-  background: var(--ink); color: var(--sun);
-}
+.quality:hover { transform: translateY(-2px); background: var(--sun); border-color: var(--sun); }
+/* Couleurs de contour alternées, identiques aux compétences */
+.quality:nth-child(3n+1) { border-color: rgba(255,94,31,.35); }
+.quality:nth-child(3n+2) { border-color: rgba(255,204,46,.45); }
+.quality:nth-child(3n+3) { border-color: rgba(255,45,127,.30); }
 
 /* Volunteer pill inline in timeline title */
 .timeline__pill {
@@ -2419,6 +2417,26 @@ body.intro-played .display__word { animation: none; }
   display: inline-block;
   padding-right: .25em;
 }
+.signoff__quote {
+  max-width: 720px;
+  margin: clamp(28px, 4vw, 48px) auto 0;
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(16px, 1.5vw, 22px);
+  line-height: 1.55;
+  color: var(--ink);
+}
+.signoff__sign {
+  display: block;
+  margin-top: 14px;
+  font-family: var(--sans);
+  font-size: 12px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--sunset-text);
+}
 
 /* ====== FOOTER ====== */
 .footer {
@@ -2631,4 +2649,14 @@ body.intro-played .display__word { animation: none; }
     animation-duration: .001ms !important;
     transition-duration: .001ms !important;
   }
+}
+
+/* ====== Marguerites retirées (demande de Marine — « on peut enlever les fleurs ») ====== */
+.daisy,
+.daisy--scatter,
+.hero__daisy,
+.manifesto__daisy,
+.manifesto__bg,
+.loader__daisy {
+  display: none !important;
 }
