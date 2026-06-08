@@ -1240,10 +1240,8 @@ body.intro-played .display__word { animation: none; }
 .about__visual {
   position: relative;
   display: grid;
-  grid-template-columns: 1fr; /* single portrait, full width */
-  grid-template-rows: 1fr;
-  gap: 16px;
-  min-height: 560px;
+  grid-template-columns: 1fr; /* single portrait */
+  grid-template-rows: auto;
 }
 .about__img {
   border-radius: 8px;
@@ -1273,7 +1271,15 @@ body.intro-played .display__word { animation: none; }
   border-radius: 4px;
   font-weight: 500;
 }
-.about__img--solo { grid-row: 1; grid-column: 1; background-color: var(--pop); background-position: center top; }
+.about__img--solo {
+  grid-row: 1; grid-column: 1;
+  width: 100%;
+  max-width: 460px;
+  aspect-ratio: 4 / 5;          /* editorial portrait, not a wide band */
+  margin-inline: auto;
+  background-color: var(--pop);
+  background-position: center 22%;  /* keeps Marine's face well framed */
+}
 
 .about__text { padding-top: 12px; }
 .about__body {
@@ -2646,7 +2652,6 @@ body.intro-played .display__word { animation: none; }
   .contact__grid { grid-template-columns: 1fr; }
   .contact__form { grid-template-columns: 1fr; }
   .about__pulls { grid-template-columns: 1fr; }
-  .about__visual { min-height: 480px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
